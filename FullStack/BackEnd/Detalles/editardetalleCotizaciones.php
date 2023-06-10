@@ -1,22 +1,25 @@
 <?php
-    require_once("cotizacion.php");
-    $data = new Cotizacion();
-    $Cotizacion_ID = $_GET['Cotizacion_ID'];
-    $data->setCotizacion_ID($Cotizacion_ID);
+    require_once("detallecotizacion.php");
+    $data = new Detalle();
+    $Detalle_ID = $_GET['Detalle_ID'];
+    $data->setDetalle_ID($Detalle_ID);
     $record = $data->selectOne();
-    $Empleados2 = $data->selectEmpleados();
-    $Clientes2 = $data->selectClientes();
+    $Cotizacion2 = $data->selectCotizacion();
     $val = $record[0];
     //print_r($val);
-    //print_r($Clientes2);
+    //print_r($Cotizacion2);
 
     if(isset($_POST['editar'])){
-        $data->setEmpleados_ID($_POST['idsEmpleado']);
-        $data->setClientes_ID($_POST['idsCliente']);
-        $data->setFecha($_POST['fechasCotizacion']);
+        $data->setCotizacion_ID($_POST['idsCoti']);
+        $data->setProducto_Alquilado($_POST['productoDet']);
+        $data->setFecha_Alquiler($_POST['fechaDet']);
+        $data->setHora_Alquiler($_POST['horaDet']);
+        $data->setPrecioxDia($_POST['precioDet']);
+        $data->setTotalCotizacion($_POST['totalDet']);
 
         $data->update();
-        echo "<script> alert('Los Datos fueron Actualizados Exitosamente'); document.location='cotizaciones.php' </script>";
+        print_r($data);
+        echo "<script> alert('Los Datos fueron Actualizados Exitosamente'); document.location='detallecotizaciones.php' </script>";
     }
 ?>
 
@@ -70,42 +73,79 @@
       </div>
     </div>
 <div class="parte-media">
-        <h2 class="m-2">Cotizacion a Editar</h2>
+        <h2 class="m-2">Detalle a Editar</h2>
       <div class="menuTabla contenedor2">
       <form class="col d-flex flex-wrap" action=""  method="post">
               <div class="mb-1 col-11">
-                <label for="idsEmpleado" class="form-label">ID Empleado</label>
-                <select id="idsEmpleado" name="idsEmpleado" class="form-control">
-                <option value="">Seleccione la ID del Empleado</option>
+                <label for="idsCoti" class="form-label">ID Cotizacion</label>
+                <select id="idsCoti" name="idsCoti" class="form-control">
+                <option value="">Seleccione la ID de la Cotizacion</option>
                 <!-- Metodo Cristian Luna -->
-                          <?php foreach ($Empleados2 as $nombress2){ 
-                            $nombresId = $nombress2['Empleados_ID'];  
-                            $nombresNombre = $nombress2['Nombre'];
+                          <?php foreach ($Cotizacion2 as $Coti2){ 
+                            $Coti2Id = $Coti2['Cotizacion_ID'];  
+                            $Coti2Val = $Coti2['Cotizacion_ID'];
                             ?>
-                            <option value="<?php echo $nombresId?>"><?php echo $nombresNombre?></option>
+                            <option value="<?php echo $Coti2Id?>"><?php echo $Coti2Val?></option>
                           <?php } ?>
                         </select>
               </div>
 
               <div class="mb-1 col-11">
-                <label for="idsCliente" class="form-label">ID Cliente</label>
-                <select id="idsCliente" name="idsCliente" class="form-control">
-                  <option value="">Seleccione la ID del Cliente</option>
-                  <!-- Metodo Santiago Lopez Garcia -->
-                          <?php foreach ($Clientes2 as $key=> $Clientes2){ ?>
-                            <option value="<?php echo $Clientes2["Clientes_ID"]?>"><?php echo $Clientes2["Nombre_Cliente"]?></option>
-                          <?php } ?>
-                        </select>
+                <label for="productoDet" class="form-label">Producto Alquilado</label>
+                <input 
+                  type="text"
+                  id="productoDet"
+                  name="productoDet"
+                  class="form-control"
+                  value="<?php echo $val["Producto_Alquilado"] ?>"
+
+                />
               </div>
 
               <div class="mb-1 col-11">
-                <label for="fechasCotizacion" class="form-label">Fecha</label>
+                <label for="fechaDet" class="form-label">Fecha Alquiler</label>
                 <input 
                   type="date"
-                  id="fechasCotizacion"
-                  name="fechasCotizacion"
+                  id="fechaDet"
+                  name="fechaDet"
                   class="form-control"
-                  value="<?php echo $val["Fecha"] ?>"
+                  value="<?php echo $val["Fecha_Alquiler"] ?>"
+
+                />
+              </div>
+
+              <div class="mb-1 col-11">
+                <label for="horaDet" class="form-label">Hora Alquiler</label>
+                <input 
+                  type="time"
+                  id="horaDet"
+                  name="horaDet"
+                  class="form-control"
+                  value="<?php echo $val["Hora_Alquiler"] ?>"
+
+                />
+              </div>
+
+              <div class="mb-1 col-11">
+                <label for="precioDet" class="form-label">Precio x Dia</label>
+                <input 
+                  type="text"
+                  id="precioDet"
+                  name="precioDet"
+                  class="form-control"
+                  value="<?php echo $val["PrecioxDia"] ?>"
+
+                />
+              </div>
+
+              <div class="mb-1 col-11">
+                <label for="totalDet" class="form-label">Total Cotizacion</label>
+                <input 
+                  type="text"
+                  id="totalDet"
+                  name="totalDet"
+                  class="form-control"
+                  value="<?php echo $val["TotalCotizacion"] ?>"
 
                 />
               </div>
@@ -119,7 +159,7 @@
       </div>
     </div>
 <div class="parte-derecho " id="detalles">
-      <h3>Detalle Cotizacion</h3>
+      <h3>Detalle Detalles</h3>
       <p>Cargando...</p>
        <!-- ///////Generando la grafica -->
 

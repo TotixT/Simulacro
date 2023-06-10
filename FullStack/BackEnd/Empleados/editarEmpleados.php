@@ -60,6 +60,10 @@
           <i class="bi bi-people"></i>
           <h3 style="margin: 0px;font-weight: 800;">Cotizaciones</h3>
         </a>
+        <a href="../Detalles/detalleCotizaciones.php" style="display: flex;gap:1px;">
+          <i class="bi bi-people"></i>
+          <h3 style="margin: 0px;font-weight: 800;">Detalle</h3>
+        </a>
       </div>
     </div>
 <div class="parte-media">

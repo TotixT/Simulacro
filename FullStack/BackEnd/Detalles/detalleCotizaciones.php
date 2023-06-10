@@ -1,22 +1,20 @@
 <?php
-  require_once("../Login/LoginEmpleado.php");
-  session_start();
-  if(isset($_POST['LogOut'])){
-    unset($_SESSION['Empleados_ID']);
-    unset($_SESSION['Usuario']);
-    header('Location:../Login/loginRegister.php');
-  }
-  if(!$_SESSION['Usuario']){
-    header('Location:../Login/loginRegister.php');
-  }
-  require_once("cotizacion.php");
-  $data = new Cotizacion();
-  $all = $data->selectAll();
-  $Empleados = $data->selectEmpleados();
-  $Clientes = $data->selectClientes();
-  //print_r($all);
-  //print_r($Empleados);
-  //print_r($Clientes);
+    require_once("../Login/LoginEmpleado.php");
+    session_start();
+    if(isset($_POST['LogOut'])){
+      unset($_SESSION['Empleados_ID']);
+      unset($_SESSION['Usuario']);
+      header('Location:../Login/loginRegister.php');
+    }
+    if(!$_SESSION['Usuario']){
+      header('Location:../Login/loginRegister.php');
+    }
+    require_once("detallecotizacion.php");
+    $data = new Detalle();
+    $all = $data->selectAll();
+    $Cotizacion = $data->selectCotizacion();
+    //print_r($all);
+
 ?>
 
 <!DOCTYPE html>
@@ -45,7 +43,7 @@
     <div class="parte-izquierda">
 
       <div class="perfil">
-        <h3 style="margin-bottom: 2rem;">Cotizacion.</h3>
+        <h3 style="margin-bottom: 2rem;">Detalle Cotizacion.</h3>
         <img src="../images/Diseño sin título.png" alt="" class="imagenPerfil">
         <h3><?php echo $_SESSION['Usuario']?></h3>
       </div>
@@ -76,19 +74,20 @@
     <div class="parte-media">
       <div style="display: flex; justify-content: space-between;">
         <h2>Cotizacion</h2>
-        <button class="btn-m" data-bs-toggle="modal" data-bs-target="#registrarCotizaciones"><i class="bi bi-person-add " style="color: rgb(255, 255, 255);" ></i></button>
+        <button class="btn-m" data-bs-toggle="modal" data-bs-target="#registrarDetalles"><i class="bi bi-person-add " style="color: rgb(255, 255, 255);" ></i></button>
       </div>
       <div class="menuTabla contenedor2">
         <table class="table table-custom ">
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">ID DEL EMPLEADO</th>
-              <th scope="col">ID DEL CLIENTE</th>
+              <th scope="col">PRODUCTO ALQUILADO</th>
               <th scope="col">FECHA</th>
+              <th scope="col">HORA</th>
+              <th scope="col">PRECIO X DIA</th>
+              <th scope="col">TOTAL</th>
               <th scope="col">ELIMINAR</th>
               <th scope="col">EDITAR</th>
-              <th scope="col">DETALLES</th>
             </tr>
           </thead>
           <tbody class="" id="tabla">
@@ -99,17 +98,16 @@
             ?>
             <tr>
               <td><?php echo $val['Cotizacion_ID'] ?></td>
-              <td><?php echo $val['Nombre'] ?></td>
-              <td><?php echo $val['Nombre_Cliente'] ?></td>
-              <td><?php echo $val['Fecha'] ?></td>
+              <td><?php echo $val['Producto_Alquilado'] ?></td>
+              <td><?php echo $val['Fecha_Alquiler'] ?></td>
+              <td><?php echo $val['Hora_Alquiler'] ?></td>
+              <td><?php echo $val['PrecioxDia'] ?></td>
+              <td><?php echo $val['TotalCotizacion'] ?></td>
               <td>  
-                <a class="btn btn-danger" href="borrarCotizaciones.php?Cotizacion_ID=<?=$val['Cotizacion_ID']?>&req=delete">Borrar</a>
+                <a class="btn btn-danger" href="borrardetalleCotizaciones.php?Detalle_ID=<?=$val['Detalle_ID']?>&req=delete">Borrar</a>
               </td>
               <td>
-                <a class="btn btn-warning" href="editarCotizaciones.php?Cotizacion_ID=<?=$val['Cotizacion_ID']?>">Editar</a>
-              </td>
-              <td>
-                <a class="btn btn-primary" href="../Detalles/detalleCotizaciones.php?Cotizacion_ID=<?=$val['Cotizacion_ID']?>">Detalles</a>
+                <a class="btn btn-warning" href="editardetalleCotizaciones.php?Detalle_ID=<?=$val['Detalle_ID']?>">Editar</a>
               </td>
             </tr>
           </tbody>
@@ -138,7 +136,7 @@
 
 
     <!-- /////////Modal de registro de nuevo estuiante //////////-->
-    <div class="modal fade" id="registrarCotizaciones" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="backdrop-filter: blur(5px)">
+    <div class="modal fade" id="registrarDetalles" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="backdrop-filter: blur(5px)">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" >
         <div class="modal-content" >
           <div class="modal-header" >
@@ -146,41 +144,69 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body" style="background-color: rgb(231, 253, 246);">
-            <form class="col d-flex flex-wrap" action="registrarCotizaciones.php" method="post">
+            <form class="col d-flex flex-wrap" action="registrarDetalles.php" method="post">
               <div class="mb-1 col-12">
-                <label for="idEmpleado" class="form-label">Id del Empleado</label>
-                <select id="idEmpleado" name="idEmpleado" class="form-control">
+                <label for="idCotizacion" class="form-label">Id de la Cotizacion</label>
+                <select id="idCotizacion" name="idCotizacion" class="form-control">
                   <!-- Metodo Cristian Luna = De la funcion que contiene ambas tablas de la DB, cuando se llaman
                             las divide y parte, seccionandolas en dos variables distintas, cada una conteniendo un dato especifico. -->
                           <?php 
-                          foreach ($Empleados as $nombre){ 
-                            $nombreId = $nombre['Empleados_ID'];  
-                            $nombreNombre = $nombre['Nombre'];
+                          foreach ($Cotizacion as $Coti){ 
+                            $CotiId = $Coti['Cotizacion_ID'];  
+                            $CotiVal = $Coti['Cotizacion_ID'];
                             ?>
-                            <option value="<?php echo intval($nombreId) ?>"><?php echo $nombreNombre?></option>
+                            <option value="<?php echo intval($CotiId) ?>"><?php echo $CotiVal?></option>
                             
                           <?php } ?>
                         </select>
               </div>
 
               <div class="mb-1 col-12">
-                <label for="idCliente" class="form-label">Id del Cliente</label>
-                <select id="idCliente" name="idCliente" class="form-control">
-                  <!-- Metodo Santiago Lopez Garcia = De la funcion que contiene ambas tablas de la DB, cuando se llaman 
-                          directamente se instancian sobre la funcion base que viene y en esa misma variable, 
-                              se llama la tabla requerida-->
-                <?php foreach ($Clientes as $key=> $Clientes){ ?>
-                            <option value="<?php echo $Clientes["Clientes_ID"]?>"><?php echo $Clientes["Nombre_Cliente"]?></option>
-                          <?php } ?>
-                        </select>
+                <label for="productoDetalle" class="form-label">Producto Alquilado</label>
+                <input 
+                  type="text"
+                  id="productoDetalle"
+                  name="productoDetalle"
+                  class="form-control"  
+                />
               </div>
 
               <div class="mb-1 col-12">
-                <label for="fechaCotizacion" class="form-label">Fecha</label>
+                <label for="fechaDetalle" class="form-label">Fecha</label>
                 <input 
                   type="date"
-                  id="fechaCotizacion"
-                  name="fechaCotizacion"
+                  id="fechaDetalle"
+                  name="fechaDetalle"
+                  class="form-control"  
+                />
+              </div>
+
+              <div class="mb-1 col-12">
+                <label for="horaDetalle" class="form-label">Hora</label>
+                <input 
+                  type="time"
+                  id="horaDetalle"
+                  name="horaDetalle"
+                  class="form-control"  
+                />
+              </div>
+
+              <div class="mb-1 col-12">
+                <label for="precioxDia" class="form-label">Precio x Dia</label>
+                <input 
+                  type="text"
+                  id="precioxDia"
+                  name="precioxDia"
+                  class="form-control"  
+                />
+              </div>
+
+              <div class="mb-1 col-12">
+                <label for="totalDetalle" class="form-label">Total</label>
+                <input 
+                  type="text"
+                  id="totalDetalle"
+                  name="totalDetalle"
                   class="form-control"  
                 />
               </div>
