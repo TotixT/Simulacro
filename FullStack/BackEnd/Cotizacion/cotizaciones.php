@@ -54,6 +54,10 @@
           <i class="bi bi-people"></i>
           <h3 style="margin: 0px;font-weight: 800;">Clientes</h3>
         </a>
+        <a href="../Empleados/empleados.php" style="display: flex;gap:1px;">
+          <i class="bi bi-people"></i>
+          <h3 style="margin: 0px;font-weight: 800;">Empleados</h3>
+        </a>
         <a href="../Cotizacion/cotizaciones.php" style="display: flex;gap:1px;">
           <i class="bi bi-people"></i>
           <h3 style="margin: 0px;font-weight: 800;">Cotizaciones</h3>
@@ -80,6 +84,7 @@
               <th scope="col">FECHA</th>
               <th scope="col">ELIMINAR</th>
               <th scope="col">EDITAR</th>
+              <th scope="col">DETALLES</th>
             </tr>
           </thead>
           <tbody class="" id="tabla">
@@ -98,6 +103,9 @@
               </td>
               <td>
                 <a class="btn btn-warning" href="editarCotizaciones.php?Cotizacion_ID=<?=$val['Cotizacion_ID']?>">Editar</a>
+              </td>
+              <td>
+                <a class="btn btn-primary" href="detalleCotizaciones.php?Cotizacion_ID=<?=$val['Cotizacion_ID']?>">Editar</a>
               </td>
             </tr>
           </tbody>

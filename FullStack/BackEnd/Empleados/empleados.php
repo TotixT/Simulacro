@@ -1,7 +1,6 @@
 <?php
   require_once("../Login/LoginEmpleado.php");
   session_start();
-
   if(isset($_POST['LogOut'])){
     unset($_SESSION['Empleados_ID']);
     unset($_SESSION['Usuario']);
@@ -10,9 +9,10 @@
   if(!$_SESSION['Usuario']){
     header('Location:../Login/loginRegister.php');
   }
-  require_once("cliente.php");
-  $data = new Cliente();
+  require_once("empleado.php");
+  $data = new Empleado();
   $all = $data->selectAll();
+
 
 ?>
 
@@ -23,7 +23,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Clientes</title>
+  <title>Empleados</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet">
@@ -42,7 +42,7 @@
     <div class="parte-izquierda">
 
       <div class="perfil">
-        <h3 style="margin-bottom: 2rem;">Clientes.</h3>
+        <h3 style="margin-bottom: 2rem;">Empleados.</h3>
         <img src="../images/Diseño sin título.png" alt="" class="imagenPerfil">
         <h3><?php echo $_SESSION['Usuario']?></h3>
       </div>
@@ -59,6 +59,9 @@
           <i class="bi bi-people"></i>
           <h3 style="margin: 0px;font-weight: 800;">Cotizaciones</h3>
         </a>
+        
+
+        
        
 
 
@@ -67,17 +70,19 @@
 
     <div class="parte-media">
       <div style="display: flex; justify-content: space-between;">
-        <h2>Cliente</h2>
-        <button class="btn-m" data-bs-toggle="modal" data-bs-target="#registrarClientes"><i class="bi bi-person-add " style="color: rgb(255, 255, 255);" ></i></button>
+        <h2>Empleado</h2>
+        <button class="btn-m" data-bs-toggle="modal" data-bs-target="#registrarEmpleados"><i class="bi bi-person-add " style="color: rgb(255, 255, 255);" ></i></button>
       </div>
       <div class="menuTabla contenedor2">
         <table class="table table-custom ">
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">NOMBRE CLIENTE</th>
-              <th scope="col">DIRECCION CLIENTE</th>
-              <th scope="col">TELEFONO CLIENTE</th>
+              <th scope="col">NOMBRE</th>
+              <th scope="col">EMAIL</th>
+              <th scope="col">USUARIO</th>
+              <th scope="col">DIRECCION</th>
+              <th scope="col">TELEFONO</th>
               <th scope="col">ELIMINAR</th>
               <th scope="col">EDITAR</th>
             </tr>
@@ -89,15 +94,17 @@
             foreach($all as $key=> $val){
             ?>
             <tr>
-              <td><?php echo $val['Clientes_ID'] ?></td>
-              <td><?php echo $val['Nombre_Cliente'] ?></td>
-              <td><?php echo $val['Direccion_Cliente'] ?></td>
-              <td><?php echo $val['Telefono_Cliente'] ?></td>
+              <td><?php echo $val['Empleados_ID'] ?></td>
+              <td><?php echo $val['Nombre'] ?></td>
+              <td><?php echo $val['Email'] ?></td>
+              <td><?php echo $val['Usuario'] ?></td>
+              <td><?php echo $val['Direccion'] ?></td>
+              <td><?php echo $val['Telefono'] ?></td>
               <td>  
-                <a class="btn btn-danger" href="borrarClientes.php?Clientes_ID=<?=$val['Clientes_ID']?>&req=delete">Borrar</a>
+                <a class="btn btn-danger" href="borrarEmpleados.php?Empleados_ID=<?=$val['Empleados_ID']?>&req=delete">Borrar</a>
               </td>
               <td>
-                <a class="btn btn-warning" href="editarClientes.php?Clientes_ID=<?=$val['Clientes_ID']?>">Editar</a>
+                <a class="btn btn-warning" href="editarEmpleados.php?Empleados_ID=<?=$val['Empleados_ID']?>">Editar</a>
               </td>
             </tr>
           </tbody>
@@ -112,7 +119,7 @@
     </div>
 
     <div class="parte-derecho " id="detalles">
-      <h3>Detalle Clientes</h3>
+      <h3>Detalle Empleados</h3>
       <p>Cargando...</p>
       <form method="POST">
         <input class="btn btn-danger" type="submit" name="LogOut" id="LogOut" value="Cerrar Sesion">
@@ -126,41 +133,71 @@
 
 
     <!-- /////////Modal de registro de nuevo estuiante //////////-->
-    <div class="modal fade" id="registrarClientes" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="backdrop-filter: blur(5px)">
+    <div class="modal fade" id="registrarEmpleados" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="backdrop-filter: blur(5px)">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" >
         <div class="modal-content" >
           <div class="modal-header" >
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Nuev@ Cliente</h1>
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Nuev@ Empleado</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body" style="background-color: rgb(231, 253, 246);">
-            <form class="col d-flex flex-wrap" action="registrarClientes.php" method="post">
+            <form class="col d-flex flex-wrap" action="registrarEmpleados.php" method="post">
               <div class="mb-1 col-12">
-                <label for="nombreCliente" class="form-label">Nombre Cliente</label>
+                <label for="nombreEmpleado" class="form-label">Nombre Empleado</label>
                 <input 
                   type="text"
-                  id="nombreCliente"
-                  name="nombreCliente"
+                  id="nombreEmpleado"
+                  name="nombreEmpleado"
                   class="form-control"  
                 />
               </div>
 
               <div class="mb-1 col-12">
-                <label for="direccionCliente" class="form-label">Direccion Cliente</label>
+                <label for="email" class="form-label">Email</label>
                 <input 
                   type="text"
-                  id="direccionCliente"
-                  name="direccionCliente"
+                  id="email"
+                  name="email"
                   class="form-control"  
                 />
               </div>
 
               <div class="mb-1 col-12">
-                <label for="telefonoCliente" class="form-label">Telefono Cliente</label>
+                <label for="usuario" class="form-label">Usuario</label>
+                <input 
+                  type="text"
+                  id="usuario"
+                  name="usuario"
+                  class="form-control"  
+                />
+              </div>
+
+              <div class="mb-1 col-12">
+                <label for="password" class="form-label">Password</label>
+                <input 
+                  type="password"
+                  id="password"
+                  name="password"
+                  class="form-control"  
+                />
+              </div>
+
+              <div class="mb-1 col-12">
+                <label for="direccion" class="form-label">Direccion</label>
+                <input 
+                  type="text"
+                  id="direccion"
+                  name="direccion"
+                  class="form-control"  
+                />
+              </div>
+
+              <div class="mb-1 col-12">
+                <label for="telefono" class="form-label">Telefono</label>
                 <input 
                   type="number"
-                  id="telefonoCliente"
-                  name="telefonoCliente"
+                  id="telefono"
+                  name="telefono"
                   class="form-control"  
                 />
               </div>
