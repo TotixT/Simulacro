@@ -2,26 +2,37 @@
 
 require_once("../Config/db.php");
 
-class LoginEmpleados{
-    private $Usuario;
-    private $password;
+class LoginEmpleado{
+    private $Empleados_ID;
     private $Email;
+    private $password;
+    private $Usuario;
     protected $dbCnx;
 
-    public function __construct($Usuario= "", $password="", $Email=""){
-        $this->Usuario = $Usuario;
-        $this->password = $password;
+    public function __construct($Empleados_ID= 0, $Email="", $password="", $Usuario=""){
+        $this->Empleados_ID = $Empleados_ID;
         $this->Email = $Email;
+        $this->password = $password;
+        $this->Usuario = $Usuario;
         $this->dbCnx = new PDO(DB_TYPE . ":host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PWD, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
     }
 
     // Users ID
 
-    public function setUsuario($Usuario){
-        $this->Usuario = $Usuario;
+    public function setEmpleados_ID($Empleados_ID){
+        $this->Empleados_ID = $Empleados_ID;
     }
-    public function getUsuario(){
-        return $this->Usuario;
+    public function getEmpleados_ID(){
+        return $this->Empleados_ID;
+    }
+
+    // Email
+
+    public function setEmail($Email){
+        $this->Email = $Email;
+    }
+    public function getEmail(){
+        return $this->Email;
     }
 
     // Password
@@ -33,13 +44,13 @@ class LoginEmpleados{
         return $this->password;
     }
 
-    // Email
+    // Usuario
 
-    public function setEmail($Email){
-        $this->Email = $Email;
+    public function setUsuario($Usuario){
+        $this->Usuario = $Usuario;
     }
-    public function getEmail(){
-        return $this->Email;
+    public function getUsuario(){
+        return $this->Usuario;
     }
 
     public function fetchAll(){
@@ -59,9 +70,10 @@ class LoginEmpleados{
             $user = $stm->fetchAll();
             if(count($user)>0){
                 session_start();
-                $_SESSION['Usuario'] = $user[0]['Usuario'];
-                $_SESSION['password'] = $user[0]['password'];
+                $_SESSION['Empleados_ID'] = $user[0]['Empleados_ID'];
                 $_SESSION['Email'] = $user[0]['Email'];
+                $_SESSION['password'] = $user[0]['password'];
+                $_SESSION['Usuario'] = $user[0]['Usuario'];
                 return true;
             } else {
                 false;

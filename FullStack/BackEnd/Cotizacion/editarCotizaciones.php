@@ -1,15 +1,19 @@
 <?php
     require_once("cotizacion.php");
     $data = new Cotizacion();
-    $idCotizacion = $_GET['idCotizacion'];
-    $data->setidCotizacion($idCotizacion);
+    $Cotizacion_ID = $_GET['Cotizacion_ID'];
+    $data->setCotizacion_ID($Cotizacion_ID);
     $record = $data->selectOne();
+    $Empleados2 = $data->selectEmpleados();
+    $Clientes2 = $data->selectClientes();
     $val = $record[0];
+    //print_r($val);
+    //print_r($Clientes2);
 
     if(isset($_POST['editar'])){
-        $data->setidEmpleados($_POST['idEmpleadoss']);
-        $data->setConstructora($_POST['constructoras']);
-        $data->setFecha($_POST['fechas']);
+        $data->setEmpleados_ID($_POST['idsEmpleado']);
+        $data->setClientes_ID($_POST['idsCliente']);
+        $data->setFecha($_POST['fechasCotizacion']);
 
         $data->update();
         echo "<script> alert('Los Datos fueron Actualizados Exitosamente'); document.location='cotizaciones.php' </script>";
@@ -23,7 +27,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Actualizar Categorias</title>
+  <title>Actualizar Facturas</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet">
@@ -32,7 +36,7 @@
     integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 
 
-  <link rel="stylesheet" type="text/css" href="../css/Styles.css">
+  <link rel="stylesheet" type="text/css" href="../../FrontEnd/css/estilos.css">
 
 </head>
 
@@ -47,46 +51,51 @@
         <h3 >Santiago Lopez</h3>
       </div>
       <div class="menus">
-        <a href="../Home/home.php" style="display: flex;gap:2px;">
-          <i class="bi bi-house-door"> </i>
-          <h3 style="margin: 0px;font-weight: 800;">Home</h3>
+      <a href="../Clientes/clientes.php" style="display: flex;gap:1px;">
+          <i class="bi bi-people"></i>
+          <h3 style="margin: 0px;font-weight: 800;">Clientes</h3>
+        </a>
+        <a href="../Cotizacion/cotizaciones.php" style="display: flex;gap:1px;">
+          <i class="bi bi-people"></i>
+          <h3 style="margin: 0px;font-weight: 800;">Cotizaciones</h3>
         </a>
       </div>
     </div>
 <div class="parte-media">
-        <h2 class="m-2">Cotizacion a Editar</h2>
+        <h2 class="m-2">Factura a Editar</h2>
       <div class="menuTabla contenedor2">
       <form class="col d-flex flex-wrap" action=""  method="post">
               <div class="mb-1 col-11">
-                <label for="idEmpleadoss" class="form-label">Id Empleados</label>
-                <input 
-                  type="text"
-                  id="idEmpleadoss"
-                  name="idEmpleadoss"
-                  class="form-control"
-                  value="<?php echo $val["idEmpleados"] ?>"
-
-                />
+                <label for="idsEmpleado" class="form-label">ID Empleado</label>
+                <select id="idsEmpleado" name="idsEmpleado" class="form-control">
+                <option value="">Seleccione la ID del Empleado</option>
+                <!-- Metodo Cristian Luna -->
+                          <?php foreach ($Empleados2 as $nombress2){ 
+                            $nombresId = $nombress2['Empleados_ID'];  
+                            $nombresNombre = $nombress2['Nombre'];
+                            ?>
+                            <option value="<?php echo $nombresId?>"><?php echo $nombresNombre?></option>
+                          <?php } ?>
+                        </select>
               </div>
 
               <div class="mb-1 col-11">
-                <label for="constructoras" class="form-label">Constructora</label>
-                <input 
-                  type="text"
-                  id="constructoras"
-                  name="constructoras"
-                  class="form-control"
-                  value="<?php echo $val["Constructora"] ?>"
-
-                />
+                <label for="idsCliente" class="form-label">ID Cliente</label>
+                <select id="idsCliente" name="idsCliente" class="form-control">
+                  <option value="">Seleccione la ID del Cliente</option>
+                  <!-- Metodo Santiago Lopez Garcia -->
+                          <?php foreach ($Clientes2 as $key=> $Clientes2){ ?>
+                            <option value="<?php echo $Clientes2["Clientes_ID"]?>"><?php echo $Clientes2["Nombre_Cliente"]?></option>
+                          <?php } ?>
+                        </select>
               </div>
 
               <div class="mb-1 col-11">
-                <label for="fechas" class="form-label">Fecha</label>
+                <label for="fechasCotizacion" class="form-label">Fecha</label>
                 <input 
                   type="date"
-                  id="fechas"
-                  name="fechas"
+                  id="fechasCotizacion"
+                  name="fechasCotizacion"
                   class="form-control"
                   value="<?php echo $val["Fecha"] ?>"
 
@@ -102,7 +111,7 @@
       </div>
     </div>
 <div class="parte-derecho " id="detalles">
-      <h3>Detalle Cotizacion</h3>
+      <h3>Detalle Facturas</h3>
       <p>Cargando...</p>
        <!-- ///////Generando la grafica -->
 

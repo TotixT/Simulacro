@@ -1,3 +1,8 @@
+<?php
+  require_once("RegistroEmpleado.php");
+  $data = new RegistroEmpleado();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,9 +21,8 @@
 <body>
     <div class="container-m">
         <div class="section1">
-           
          <div class="d-flex justify-content-center align-items-center">
-            <img src="img/Coti.png" alt="" class="logo"></div>
+            <img src="img/LogoConstruct.jpg" alt="" class="logo"></div>
             <div class="d-flex justify-content-center align-items-center"><h1 style="font-weight: 800;">BIENVENIDOS</h1></div>
             <div  class="d-flex justify-content-center align-items-center" >
                 <form action="loguearse.php" method="POST">
@@ -45,7 +49,7 @@
                   </form>
                   
 
-            </div>
+            </div>      
         </div>
         <div class="section2" id="section2">
              <div class="d-flex justify-content-star " >
@@ -55,8 +59,25 @@
              <div  class="d-flex justify-content-center align-items-center" >
                 
                 <form action="registrarse.php" method="POST">
-                    <h1 class="m-5" style="font-weight: 800;">Usuario</h1>
+                    <h1 class="m-3" style="font-weight: 800;">REGISTRAR USUARIO</h1>
                     <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input 
+                          type="text"
+                          id="nombre"
+                          name="nombre"
+                          class="form-control"  
+                        />
+                    </div>
+                    <div class="mb-3">
+                    <label for="email" class="form-label">Registro Email</label>
+                        <input 
+                          type="text"
+                          id="email"
+                          name="email"
+                          class="form-control"  
+                        />
+                    </div>
                     <div class="mb-3">
                         <label for="usuario" class="form-label">Usuario</label>
                         <input 
@@ -75,29 +96,26 @@
                           class="form-control"  
                         />
                     </div>
-                    <label for="email" class="form-label">Email</label>
+                    <div class="mb-3">
+                        <label for="direccion" class="form-label">Direccion</label>
                         <input 
                           type="text"
-                          id="email"
-                          name="email"
+                          id="direccion"
+                          name="direccion"
                           class="form-control"  
                         />
                     </div>
-                    
-                    <div class="mb-3 form-check">
-                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                      <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                    <div class="mb-3">
+                        <label for="telefono" class="form-label">Telefono</label>
+                        <input 
+                          type="text"
+                          id="telefono"
+                          name="telefono"
+                          class="form-control"  
+                        />
                     </div>
                     <input type="submit" class="btn btn-primary" value="Registrarse" name="registrarse"/>
                   </form>
-
-            </div>
-                  
-
-
-                 
-         
-        </div>
       </div>
 
       <!-- Boostrap -->

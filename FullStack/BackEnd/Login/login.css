@@ -16,14 +16,13 @@ body {
   .section1 {
     flex: 1;
     padding: 20px;
-    margin-top: 20rem;
-    background-color: rgba(11, 11, 185, 0.8) !important;
+    background-color: rgba(9, 58, 179, 0.979) !important;
     
 }
   .section2 {
     flex: 1;
     padding: 20px;
-    background-color: #1acf53 !important;
+    background-color: #faeded;
   
 }
 
