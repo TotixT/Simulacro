@@ -1,4 +1,9 @@
 <?php
+    require_once("../Login/LoginEmpleado.php");
+    session_start();
+    if(!$_SESSION['Usuario']){
+      header('Location:../Login/loginRegister.php');
+    }
     require_once("empleado.php");
     $data = new Empleado();
     $Empleados_ID = $_GET['Empleados_ID'];
@@ -45,7 +50,7 @@
       <div class="perfil">
         <h3 style="margin-bottom: 2rem;">Campus Skiller.</h3>
         <img src="../images/Diseño sin título.png" alt="" class="imagenPerfil">
-        <h3 >Santiago Lopez</h3>
+        <h3 ><?php echo $_SESSION['Usuario']?></h3>
       </div>
       <div class="menus">
       <a href="../Clientes/clientes.php" style="display: flex;gap:1px;">
