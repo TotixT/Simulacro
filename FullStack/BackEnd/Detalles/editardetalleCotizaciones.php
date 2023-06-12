@@ -23,7 +23,7 @@
         $data->setTotalCotizacion($_POST['totalDet']);
 
         $data->update();
-        print_r($data);
+        //print_r($data);
         echo "<script> alert('Los Datos fueron Actualizados Exitosamente'); document.location='detalleCotizaciones.php' </script>";
     }
 ?>
@@ -44,7 +44,7 @@
     integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 
 
-  <link rel="stylesheet" type="text/css" href="../../FrontEnd/css/estilos.css">
+  <link rel="stylesheet" type="text/css" href="../../FrontEnd/css/styles.css">
 
 </head>
 
@@ -84,7 +84,7 @@
               <div class="mb-1 col-11">
                 <label for="idsCoti" class="form-label">ID Cotizacion</label>
                 <select id="idsCoti" name="idsCoti" class="form-control">
-                <option value="">Seleccione la ID de la Cotizacion</option>
+                <option value="">Seleccione la ID del Detalle</option>
                 <!-- Metodo Cristian Luna -->
                           <?php foreach ($Cotizacion2 as $Coti2){ 
                             $Coti2Id = $Coti2['Cotizacion_ID'];  

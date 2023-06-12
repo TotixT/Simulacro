@@ -32,7 +32,7 @@
     integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 
 
-  <link rel="stylesheet" type="text/css" href="../../FrontEnd/css/estilos.css">
+  <link rel="stylesheet" type="text/css" href="../../FrontEnd/css/styles.css">
 
 </head>
 
@@ -75,7 +75,7 @@
         <button class="btn-m" data-bs-toggle="modal" data-bs-target="#registrarClientes"><i class="bi bi-person-add " style="color: rgb(255, 255, 255);" ></i></button>
       </div>
       <div class="menuTabla contenedor2">
-        <table class="table table-custom ">
+        <table class="table table-primary table-hover">
           <thead>
             <tr>
               <th scope="col">#</th>
