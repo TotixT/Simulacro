@@ -10,6 +10,7 @@ body{
     flex-direction: row;
     height: 100vh;
     margin: 0;
+    background-color: black;
     
    
   }
@@ -24,18 +25,18 @@ body{
 
 
   .parte-media {
-    background-color: #faeded;
+    background-color: #cfe2ff;
     width: 60%;
     padding: 20px;
     border-radius: 10px;
-    border-right: 2px solid rgb(255, 255, 255);
+    border-right: 2px solid #09b855;
    
 
   }
   
   .parte-derecho {
-    background-color: #fff9f9;
-    width: 25%;
+    background-color: #09b855;
+    width: 20%;
     padding: 20px;
     border-radius: 10px;
    
@@ -95,9 +96,10 @@ body{
   }
   
    .menus a:hover{
-    background-color:rgb(74, 74, 97);
+    background-color:rgb(0, 0, 0);
     padding: 5px;
-    color: #fff9f9;
+    border-radius: 10px;
+    color: #f5f5f5;
     margin: 5px;
     font-weight: 800;
  
@@ -214,9 +216,9 @@ body{
 
 /* ////////////////////////////   STYLOS PARTE IZQUIERADA //////////////////////////////// */
 .parte-izquierda {
-  background-color: #faeded;
-  width: 15%;
-  border-right: 2px solid rgb(255, 255, 255);
+  background-color: rgb(36, 180, 91);
+  width: 20%;
+  border-right: 2px solid rgb(36, 180, 91);
   padding: 20px;
   border-radius: 10px;
 
